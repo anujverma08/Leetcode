@@ -1,27 +1,18 @@
 class Solution {
 public:
-    void permute(vector<int>& nums,vector<vector<int>>& ans,vector<int>& per,vector<bool>& used){
-        if(per.size() == nums.size()){
-            ans.push_back(per);
-            return;
+    void recurPermute(vector<int>& nums,int index,vector<vector<int>>& ans){
+        if(index == nums.size()){
+            ans.push_back(nums);
         }
-        for(int i = 0; i < nums.size(); i++){
-            if(!used[i]){
-                used[i] = true;
-                per.push_back(nums[i]);
-                permute(nums,ans,per,used);
-                per.pop_back();
-                used[i] = false;
-
-            }
+        for(int i = index; i < nums.size(); i++){
+            swap(nums[index],nums[i]);
+            recurPermute(nums,index+1,ans);
+            swap(nums[index],nums[i]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        int n = nums.size();
         vector<vector<int>> ans;
-        vector<int> per;
-        vector<bool> used(n,false);
-        permute(nums,ans,per,used);
+        recurPermute(nums,0,ans);
         return ans;
     }
 };
