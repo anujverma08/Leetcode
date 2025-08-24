@@ -1,37 +1,21 @@
 class Solution {
 public:
-    bool isValid(string& s){
-        int count = 0;
-        for(int i = 0; i < s.size(); i++){
-            if(s[i] == '('){
-                count++;
-            }else{
-                count--;
-            }
-            if(count < 0) return false;
-        }
-        if (count == 0) return true;
-        return false;
-    }
-    void solve(int n,vector<string>& res, string& curr){
-        if(curr.size() == 2*n){
-            if(isValid(curr)){
-                res.push_back(curr);
-            }
+    void generate(vector<string>& res, string current, int open, int close, int n) {
+        if (current.length() == 2 * n) {
+            res.push_back(current);
             return;
         }
-        curr.push_back('(');
-        solve(n,res,curr);
-        curr.pop_back();
-
-        curr.push_back(')');
-        solve(n,res,curr);
-        curr.pop_back();
+        
+        if (open < n)
+            generate(res, current + "(", open + 1, close, n);
+        
+        if (close < open)
+            generate(res, current + ")", open, close + 1, n);
     }
+
     vector<string> generateParenthesis(int n) {
-        vector<string> result;
-        string curr = "";
-        solve(n,result,curr);
-        return result;
+        vector<string> res;
+        generate(res, "", 0, 0, n);
+        return res;
     }
 };
