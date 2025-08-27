@@ -3,7 +3,7 @@ public:
     void solve(int index,vector<vector<int>>& res, vector<int>& sub,vector<int>& nums){
         res.push_back(sub);
         for(int i = index; i < nums.size(); i++){
-            if(i > index && nums[i] == nums[i - 1]) continue;
+            if(i !+ index && nums[i] == nums[i - 1]) continue;
             sub.push_back(nums[i]);
             solve(i+1,res,sub,nums);        
             sub.pop_back();
