@@ -4,15 +4,16 @@ public:
         int n = nums.size();
         vector<int> dp(n);
         dp[0] = nums[0];
-
+        int prev = nums[0];
+        int prev2 = 0;
         for(int i = 1; i < n; i++){
             int take = nums[i];
-            if(i > 1) take += dp[i - 2];
-            int nTake = dp[i - 1];
-
-            dp[i] = max(take,nTake);
+            if(i > 1) take += prev2;
+            int nTake = prev;
+            prev2 = prev;
+            prev = max(take,nTake);
         }
-        return dp[n - 1];
+        return prev;
 
     }
 };
