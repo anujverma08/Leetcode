@@ -1,22 +1,31 @@
 class Solution {
 public:
-    int solve(int row, int col, vector<vector<int>>& dp,vector<vector<int>>& obstacleGrid){
-        if(row >= 0 && col >= 0 && obstacleGrid[row][col] == 1) return 0;
-
-        if(row < 0 || col < 0) return 0;
-        if(dp[row][col] != -1) return dp[row][col];
-
-        if(row == 0 && col == 0) return dp[0][0] = 1;
-
-        int up = solve(row - 1, col, dp, obstacleGrid);
-        int left = solve(row, col - 1, dp, obstacleGrid);
-
-        return dp[row][col] = up + left;
-    }
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int n = obstacleGrid.size();
         int m = obstacleGrid[0].size();
-        vector<vector<int>> dp(n ,vector<int>(m,-1));
-        return solve(n-1,m-1,dp,obstacleGrid);
+
+        vector<vector<int>> dp(n, vector<int>(m));
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < m; col++) {
+                if (obstacleGrid[row][col] == 1) {
+                    dp[row][col] = 0;
+                    continue;
+                }
+                if (row == 0 && col == 0) {
+                    dp[row][col] = 1;
+                } else {
+                    int up = 0, left = 0;
+                    if (row > 0) {
+                        up = dp[row - 1][col];
+                    }
+                    if (col > 0) {
+                        left = dp[row][col - 1];
+                    }
+
+                    dp[row][col] = up + left;
+                }
+            }
+        }
+        return dp[n - 1][m - 1];
     }
 };
