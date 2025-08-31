@@ -6,10 +6,7 @@ public:
             if(amount % coins[0] == 0) return 1;
             return 0;
         }
-
-        // if (amount < 0)
-        //     return 0;
-
+        
         if (dp[index][amount] != -1)
             return dp[index][amount];
 
