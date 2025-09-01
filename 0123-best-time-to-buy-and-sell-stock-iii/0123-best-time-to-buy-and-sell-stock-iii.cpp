@@ -5,8 +5,8 @@ public:
         vector<int> after(6, 0), curr(6, 0);
 
         for (int i = n - 1; i >= 0; i--) {
-            for (int j = 4; j >= 1; j--) {
-                if (j % 2 == 1) {
+            for (int j = 3; j >= 0; j--) {
+                if (j % 2 == 0) {
                     int profit = -prices[i] + after[j + 1];
                     profit = max(profit, after[j]);
                     curr[j] = profit;
@@ -18,6 +18,6 @@ public:
             }
             after = curr;
         }
-        return after[1];
+        return after[0];
     }
 };
