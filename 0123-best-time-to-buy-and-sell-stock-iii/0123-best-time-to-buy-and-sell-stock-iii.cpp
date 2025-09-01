@@ -2,34 +2,21 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<vector<int>>> dp(
-            n + 1, vector<vector<int>>(2, vector<int>(3, 0)));
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= 1; j++) {
-                dp[i][j][0] = 0;
-            }
-        }
-        for (int j = 0; j <= 1; j++) {
-            for (int k = 0; k < 3; k++) {
-                dp[n][j][k] = 0;
-            }
-        }
+        vector<vector<int>> dp(n + 1, vector<int>(6, 0));
 
         for (int i = n - 1; i >= 0; i--) {
-            for (int j = 0; j <= 1; j++) {
-                for (int k = 1; k <= 2; k++) {
-                    if (j) {
-                        int profit = -prices[i] + dp[i + 1][0][k];
-                        profit = max(profit, dp[i + 1][1][k]);
-                        dp[i][j][k] = profit;
+            for (int j = 4; j >= 1; j--) {
+                    if (j % 2 == 1) {
+                        int profit = -prices[i] + dp[i + 1][j + 1];
+                        profit = max(profit, dp[i + 1][j]);
+                       dp[i][j] = profit;
                     } else {
-                        int profit = prices[i] + dp[i + 1][1][k - 1];
-                        profit = max(profit, dp[i + 1][0][k]);
-                        dp[i][j][k] = profit;
+                        int profit = prices[i] + dp[i + 1][j + 1];
+                        profit = max(profit, dp[i + 1][j]);
+                        dp[i][j] = profit;
                     }
                 }
-            }
         }
-        return dp[0][1][2];
+        return dp[0][1];
     }
 };
